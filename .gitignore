@@ -171,10 +171,7 @@ cython_debug/
 .pypirc
 
 *.db
-
-#migrations
-versions/
+*.sqlite3
 
 # Ignore all log files
 *.log
-
