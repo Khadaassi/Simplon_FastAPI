@@ -169,3 +169,12 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+*.db
+
+#migrations
+versions/
+
+# Ignore all log files
+*.log
+
