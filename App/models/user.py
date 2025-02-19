@@ -10,3 +10,7 @@ class User(SQLModel, table=True):
 
     def __str__(self):
         return f"{self.email} - {self.role}"
+
+class UserLogin(SQLModel):
+    email: str
+    password: str
