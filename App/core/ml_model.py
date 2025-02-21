@@ -1,5 +1,5 @@
 import pickle
-from app.core.config import settings
+from core.config import settings
 
 def load_model():
     with open(settings.MODEL_PATH, "rb") as file:

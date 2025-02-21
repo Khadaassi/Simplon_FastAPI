@@ -1,7 +1,7 @@
 # app/main.py
 from fastapi import FastAPI
-from app.database.database import create_db_and_tables
-from app.routes import loans, admin, auth
+from database.database import create_db_and_tables
+from routes import loans, admin, auth
 
 app = FastAPI()
 
@@ -16,4 +16,4 @@ app.include_router(admin.router)
 # Lancer le serveur
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
