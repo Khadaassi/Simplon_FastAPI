@@ -11,7 +11,7 @@ from core.security import get_admin_user
 router = APIRouter(prefix="/admin", tags=["admin"])
 
 
-@router.post("/admin/users", status_code=201)
+@router.post("/users", status_code=201)
 def create_user(user: UserCreate, db: Session = Depends(get_session), admin: User = Depends(get_admin_user)):
     existing_user = db.query(User).filter(User.email == user.email).first()
     if existing_user:
