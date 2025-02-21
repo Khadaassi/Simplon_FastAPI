@@ -178,3 +178,5 @@ cython_debug/
 
 # Ignore all pyc files
 *.pkl
+.DS_Store
+*.DS_Store
