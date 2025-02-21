@@ -1,28 +1,32 @@
 # app/routes/admin.py
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
-from app.models.user import User, UserRole
+from app.models.user import User
 from app.core.security import hash_password
 from app.core.security import get_current_user
-from app.database.database import get_db
+from app.database.database import get_session
+from app.schemas.users import UserCreate
+from app.core.security import get_admin_user
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
-@router.get("/users")
-def get_users(db: Session = Depends(get_db), admin=Depends(get_current_user)):
-    if admin.role != UserRole.ADMIN:
-        raise HTTPException(status_code=403, detail="Not authorized")
-    return db.exec(select(User)).all()
 
-@router.get("/users")
-def list_users():
-    pass
+@router.post("/admin/users", status_code=201)
+def create_user(user: UserCreate, db: Session = Depends(get_session), admin: User = Depends(get_admin_user)):
+    existing_user = db.query(User).filter(User.email == user.email).first()
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Email already registered")
 
-@router.post("/users")
-def create_user(email: str, password: str, role: UserRole, db: Session = Depends(get_db), admin=Depends(get_current_user)):
-    if admin.role != UserRole.ADMIN:
-        raise HTTPException(status_code=403, detail="Not authorized")
-    user = User(email=email, hashed_password=hash_password(password), role=role, is_active=False)
-    db.add(user)
+    new_user = User(
+        email=user.email,
+        hashed_password=hash_password(user.password),
+        is_admin=user.is_admin
+    )
+    db.add(new_user)
     db.commit()
-    return {"message": "User created successfully"}
+    db.refresh(new_user)
+    return {"message": "Utilisateur créé avec succès"}
+
+@router.get("/me")
+def read_users_me(current_user: dict = Depends(get_current_user)):
+    return {"email": current_user["sub"], "role": current_user.get("role")}
