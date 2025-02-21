@@ -1,5 +1,10 @@
-uvicorn==0.34.0
-pytest==8.3.4
-fastapi==0.115.8
-alembic==1.14.1
-python-jose == 3.3.0
+uvicorn
+fastapi
+alembic 
+sqlmodel
+passlib
+pandas
+scikit-learn
+pyjwt
+argon2-cffi
+pydantic
