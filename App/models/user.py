@@ -1,16 +1,12 @@
+# app/models/user.py
 from sqlmodel import SQLModel, Field
+from typing import Optional
+from enum import Enum
 
 
 class User(SQLModel, table=True):
-    id : int = Field(primary_key=True)
-    email : str
-    password : str
-    is_active : bool = False
-    role : str
-
-    def __str__(self):
-        return f"{self.email} - {self.role}"
-
-class UserLogin(SQLModel):
-    email: str
+    id: Optional[int] = Field(default=None, primary_key=True)
+    email: str = Field(unique=True, index=True)
     password: str
+    is_admin: bool = Field(default=False)
+    is_active: bool = Field(default=False)
