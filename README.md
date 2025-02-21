@@ -150,12 +150,12 @@ The API provides the following outputs:
   </a>
 
 - **Ludivine Raby**
-  <a href="https://github.com/ludivineraby" target="_blank">
+  <a href="https://github.com/ludivineRB" target="_blank">
       <img loading="lazy" src="images/github-mark.png" width="30" height="30" style="vertical-align: middle; float: middle; margin-left: 30px;" alt="GitHub Logo">
   </a>
 
 - **Raouf Addeche**
-  <a href="https://github.com/raoufaddeche" target="_blank">
+  <a href="https://github.com/RaoufAddeche" target="_blank">
       <img loading="lazy" src="images/github-mark.png" width="30" height="30" style="vertical-align: middle; float: middle; margin-left: 30px;" alt="GitHub Logo">
   </a>
 
