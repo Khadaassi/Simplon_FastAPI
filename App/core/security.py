@@ -3,16 +3,17 @@ from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 import os
+from core.config import settings
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlmodel import Session, select
-from app.core.config import settings
-from app.database.database import get_session
-from app.models.user import User
+from core.config import settings
+from database.database import get_session
+from models.user import User
 
-SECRET_KEY = os.getenv("SECRET_KEY")
-ALGORITHM = os.getenv("ALGORITHM")
-ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")
+SECRET_KEY = settings.SECRET_KEY
+ALGORITHM = settings.ALGORITHM
+ACCESS_TOKEN_EXPIRE_MINUTES = settings.ACCESS_TOKEN_EXPIRE_MINUTES
 
 # Gestion des mots de passe
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -42,10 +43,10 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     if not user:
         raise HTTPException(status_code=401, detail="User not found")
 
-    return {"id": user.id, "email": user.email, "role": "admin" if user.is_admin else "user"}
+    return user
 
 def get_admin_user(current_user: dict = Depends(get_current_user), session: Session = Depends(get_session)):
-    user = session.exec(select(User).where(User.email == current_user["sub"])).first()
+    user = session.exec(select(User).where(User.email == current_user.email)).first()
     if not user or not user.is_admin:
         raise HTTPException(status_code=403, detail="Admin access required")
     return user

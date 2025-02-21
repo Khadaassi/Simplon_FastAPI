@@ -1,12 +1,12 @@
 # app/routes/admin.py
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
-from app.models.user import User
-from app.core.security import hash_password
-from app.core.security import get_current_user
-from app.database.database import get_session
-from app.schemas.users import UserCreate
-from app.core.security import get_admin_user
+from models.user import User
+from core.security import hash_password
+from core.security import get_current_user
+from database.database import get_session
+from schemas.users import UserCreate
+from core.security import get_admin_user
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
@@ -27,6 +27,7 @@ def create_user(user: UserCreate, db: Session = Depends(get_session), admin: Use
     db.refresh(new_user)
     return {"message": "Utilisateur créé avec succès"}
 
-@router.get("/me")
-def read_users_me(current_user: dict = Depends(get_current_user)):
-    return {"email": current_user["sub"], "role": current_user.get("role")}
+@router.get("/users", status_code=200)
+def get_users(session: Session = Depends(get_session), admin: User = Depends(get_admin_user)):
+    users = session.exec(select(User)).all()
+    return users

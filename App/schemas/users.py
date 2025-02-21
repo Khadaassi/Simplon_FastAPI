@@ -21,6 +21,10 @@ class UserLogin(BaseModel):
     email: EmailStr
     password: str
 
+class UserActivation(BaseModel):
+    email: EmailStr
+    new_password: str
+
 # Schéma pour la réponse après connexion (token JWT)
 class TokenResponse(BaseModel):
     access_token: str
