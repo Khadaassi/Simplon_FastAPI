@@ -176,4 +176,5 @@ cython_debug/
 # Ignore all log files
 *.log
 
+# Ignore all pyc files
 *.pkl
