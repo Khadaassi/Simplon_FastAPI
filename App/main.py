@@ -1,31 +1,19 @@
 # app/main.py
 from fastapi import FastAPI
-import uvicorn
-from app.database.database import init_db
-from app.routes import auth, loan, admin
+from app.database.database import create_db_and_tables
+from app.routes import loans, admin, auth
 
-# Initialiser l'application FastAPI
-app = FastAPI(
-    title="Loan API",
-    description="API de gestion des prêts avec prédiction",
-    version="1.0"
-)
+app = FastAPI()
 
-# Initialisation de la base de données au démarrage
 @app.on_event("startup")
-def startup():
-    init_db()
+def on_startup():
+    create_db_and_tables()
 
-# Inclusion des routes
 app.include_router(auth.router)
-app.include_router(loan.router)
+app.include_router(loans.router)
 app.include_router(admin.router)
 
-# Point d'entrée de test
-@app.get("/")
-def root():
-    return {"message": "Bienvenue sur l'API de prêt !"}
-
-# Permet d'exécuter directement le script avec `python app/main.py`
+# Lancer le serveur
 if __name__ == "__main__":
+    import uvicorn
     uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
