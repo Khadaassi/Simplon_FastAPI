@@ -15,7 +15,7 @@ router = APIRouter(prefix="/loans", tags=["Loans"])
 # Charger le modèle une seule fois au démarrage
 #MODEL_PATH = os.path.join(os.path.dirname(__file__), "loan_model.pkl")
 
-with open("models/loan_model.pkl", "rb") as f:
+with open("App/models/loan_model.pkl", "rb") as f:
     model = pickle.load(f)
 
 FEATURES = ['State', 'NAICS', 'NewExist', 'RetainedJob', 
