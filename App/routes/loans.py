@@ -76,3 +76,34 @@ def predict_and_save_loan(
         "status": loan_request.status,
         "loan_request_id": loan_request.id
     }
+
+# app/routes/loan.py - Ajoutez cet endpoint
+@router.get("/advisor")
+def get_advisor_loans(
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_session)
+):
+    """Récupère les prêts assignés à un conseiller"""
+    # Vérifier si l'utilisateur est un conseiller
+    if not current_user.is_admin:
+        raise HTTPException(status_code=403, detail="Accès réservé aux conseillers")
+
+    # Récupérer tous les prêts
+    loan_requests = db.exec(select(LoanRequest)).all()
+
+    # Organiser les prêts par client
+    client_loans = {}
+    for loan in loan_requests:
+        # Récupérer l'utilisateur qui a fait la demande
+        user = db.exec(select(user).where(user.id == loan.user_id)).first()
+        if user:
+            if user.email not in client_loans:
+                client_loans[user.email] = []
+            client_loans[user.email].append({
+                "id": loan.id,
+                "amount": loan.amount,
+                "status": loan.status,
+                "created_at": loan.created_at.isoformat()
+            })
+
+    return client_loans
