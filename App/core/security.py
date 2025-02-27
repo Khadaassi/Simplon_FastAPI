@@ -16,7 +16,7 @@ ALGORITHM = settings.ALGORITHM
 ACCESS_TOKEN_EXPIRE_MINUTES = settings.ACCESS_TOKEN_EXPIRE_MINUTES
 
 # Gestion des mots de passe
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 
 # OAuth2 pour gérer l'authentification avec JWT
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
