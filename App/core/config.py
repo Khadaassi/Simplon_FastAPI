@@ -6,7 +6,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     ALGORITHM: str = "HS256"
     DATABASE_URL: str = "sqlite:///./database.db"
-    MODEL_PATH: str = "app/models/loan_model.pkl"  # Emplacement du modèle ML
+    MODEL_PATH: str = "models/loan_model.pkl"  # Emplacement du modèle ML
 
     class Config:
         env_file = ".env"
