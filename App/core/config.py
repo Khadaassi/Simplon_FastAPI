@@ -1,14 +1,13 @@
-# app/core/config.py
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    SECRET_KEY: str = "supersecretkey"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
-    ALGORITHM: str = "HS256"
-    DATABASE_URL: str = "sqlite:///./database.db"
-    MODEL_PATH: str = "models/loan_model.pkl"  # Emplacement du modèle ML
+    SECRET_KEY: str
+    ACCESS_TOKEN_EXPIRE_MINUTES: int
+    ALGORITHM: str
+    DATABASE_URL: str
+    MODEL_PATH: str
 
     class Config:
-        env_file = ".env"
+        env_file = ".env"  # Charge le fichier .env
 
 settings = Settings()
