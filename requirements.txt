@@ -12,3 +12,5 @@ pydantic_settings
 python-jose
 shap
 matplotlib
+catboost
+pydantic[email]

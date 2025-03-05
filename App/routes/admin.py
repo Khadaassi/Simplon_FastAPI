@@ -1,12 +1,12 @@
 # app/routes/admin.py
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
-from models.user import User
-from core.security import hash_password
-from core.security import get_current_user
-from database.database import get_session
-from schemas.users import UserCreate
-from core.security import get_admin_user
+from App.models.user import User
+from App.core.security import hash_password
+from App.core.security import get_current_user
+from App.database.database import get_session
+from App.schemas.users import UserCreate
+from App.core.security import get_admin_user
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 

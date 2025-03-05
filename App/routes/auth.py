@@ -2,11 +2,11 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from sqlmodel import Session, select
-from models.user import User
-from schemas.users import UserLogin, TokenResponse, UserActivation
-from core.security import verify_password, create_access_token, hash_password
-from core.config import settings
-from database.database import get_session
+from App.models.user import User
+from App.schemas.users import UserLogin, TokenResponse, UserActivation
+from App.core.security import verify_password, create_access_token, hash_password
+from App.core.config import settings
+from App.database.database import get_session
 from datetime import timedelta
 
 

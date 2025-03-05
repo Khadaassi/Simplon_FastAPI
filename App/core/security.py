@@ -3,13 +3,13 @@ from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 import os
-from core.config import settings
+from App.core.config import settings
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlmodel import Session, select
-from core.config import settings
-from database.database import get_session
-from models.user import User
+from App.core.config import settings
+from App.database.database import get_session
+from App.models.user import User
 
 SECRET_KEY = settings.SECRET_KEY
 ALGORITHM = settings.ALGORITHM

@@ -1,7 +1,7 @@
 # app/main.py
 from fastapi import FastAPI
-from database.database import create_db_and_tables
-from routes import loans, admin, auth
+from App.database.database import create_db_and_tables
+from App.routes import loans, admin, auth
 
 app = FastAPI()
 

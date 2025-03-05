@@ -1,12 +1,12 @@
 # app/routes/loan.py
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlmodel import Session, select
-from models.loans import LoanRequest
-from database.database import get_session
+from App.models.loans import LoanRequest
+from App.database.database import get_session
 import pickle
 import pandas as pd
-from schemas.loans import LoanApplication
-from core.security import get_current_user
+from App.schemas.loans import LoanApplication
+from App.core.security import get_current_user
 from datetime import datetime
 from typing import Optional
 import shap
@@ -19,7 +19,7 @@ router = APIRouter(prefix="/loans", tags=["Loans"])
 # Charger le modèle une seule fois au démarrage
 #MODEL_PATH = os.path.join(os.path.dirname(__file__), "loan_model.pkl")
 
-with open("models/loan_model.pkl", "rb") as f:
+with open("App/models/loan_model.pkl", "rb") as f:
     model = pickle.load(f)
 
 FEATURES = ['State', 'NAICS', 'NewExist', 'RetainedJob', 
