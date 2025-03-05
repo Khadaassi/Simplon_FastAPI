@@ -8,3 +8,7 @@ scikit-learn
 pyjwt
 argon2-cffi
 pydantic
+pydantic_settings
+python-jose
+shap
+matplotlib
