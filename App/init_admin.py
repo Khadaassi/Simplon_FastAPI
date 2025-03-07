@@ -54,7 +54,7 @@ def create_admin():
 
         # Créer un utilisateur admin
         user = User(
-            email="admin@example.com",
+            email="admin1@example.com",
             hashed_password=hashed_password,
             is_active=True,
             is_admin=True,

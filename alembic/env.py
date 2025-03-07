@@ -6,7 +6,7 @@ from sqlalchemy import pool
 from alembic import context
 
 from sqlmodel import SQLModel
-from app.database.database import engine
+from App.database.database import engine
 target_metadata = SQLModel.metadata
 
 # this is the Alembic Config object, which provides
