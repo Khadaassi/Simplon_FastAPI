@@ -7,13 +7,14 @@ from core.config import settings
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlmodel import Session, select
-from core.config import settings
 from database.database import get_session
 from models.user import User
 
+
 SECRET_KEY = settings.SECRET_KEY
-ALGORITHM = settings.ALGORITHM
 ACCESS_TOKEN_EXPIRE_MINUTES = settings.ACCESS_TOKEN_EXPIRE_MINUTES
+ALGORITHM = settings.ALGORITHM
+
 
 # Gestion des mots de passe
 pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
@@ -34,7 +35,7 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
 
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_session)):
-    payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+    payload = jwt.decode(token, settings.SECRET_KEY, algorithms=ALGORITHM)
     email = payload.get("sub")
     if email is None:
         raise HTTPException(status_code=401, detail="Invalid token")
@@ -53,6 +54,6 @@ def get_admin_user(current_user: dict = Depends(get_current_user), session: Sess
 
 def decode_access_token(token: str):
     try:
-        return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        return jwt.decode(token, SECRET_KEY, algorithms=ALGORITHM)
     except JWTError:
         return None
