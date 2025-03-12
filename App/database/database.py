@@ -9,7 +9,7 @@ engine = create_engine(settings.DATABASE_URL, echo=True)
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
 
-# Dépendance pour obtenir une session de base de données
+# Dépendance pour obtenir une son de base de données
 def get_session():
     with Session(engine) as session:
         yield session

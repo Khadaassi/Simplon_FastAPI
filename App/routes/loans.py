@@ -9,11 +9,11 @@ from schemas.loans import LoanApplication
 from core.security import get_current_user
 from datetime import datetime
 from typing import Optional
-import shap
+#import shap
 import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
-
+import gc
 
 router = APIRouter(prefix="/loans", tags=["Loans"])
 # Charger le modèle une seule fois au démarrage
@@ -27,8 +27,8 @@ FEATURES = ['State', 'NAICS', 'NewExist', 'RetainedJob',
 # Extraire le modèle CatBoost de la pipeline
 catboost_model = model.named_steps["model"]  # Récupérer le modèle entraîné
 
-# Créer l'explainer SHAP
-explainer = shap.Explainer(catboost_model)
+# # Créer l'explainer SHAP
+# explainer = shap.Explainer(catboost_model)
 
 
 @router.get("/history")
@@ -57,21 +57,25 @@ def get_loan_history(
         for request in loan_requests
     ]
 
-def generate_shap_plot(model, input_data):
-    explainer = shap.Explainer(model)
-    shap_values = explainer(input_data)
+# def generate_shap_plot(model, input_data):
+#     explainer = shap.Explainer(model)
+#     shap_values = explainer(input_data)
 
-    plt.figure(figsize=(8, 4))
-    #shap.summary_plot(shap_values, input_data, plot_type="bar", show=False)
-    shap.plots.waterfall(shap_values[0])
+#     plt.figure(figsize=(8, 4))
+#     #shap.summary_plot(shap_values, input_data, plot_type="bar", show=False)
+#     shap.plots.waterfall(shap_values[0])
 
-    buf = BytesIO()
-    plt.savefig(buf, format="png", bbox_inches="tight")
-    buf.seek(0)
-    plt.close()
+#     buf = BytesIO()
+#     plt.savefig(buf, format="png", bbox_inches="tight")
+#     buf.seek(0)
+#     plt.close()
 
-    # Encoder l'image en Base64
-    return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode("utf-8")
+#      # Libération mémoire
+#     del explainer, shap_values
+#     gc.collect()
+
+#     # Encoder l'image en Base64
+#     return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode("utf-8")
 
 @router.post("/request")
 def predict_and_save_loan(
@@ -86,8 +90,8 @@ def predict_and_save_loan(
     # Vérifier l'éligibilité
     is_eligible = bool(prediction[0])
     # Générer l'explication SHAP
-    shap_plot = generate_shap_plot(catboost_model, input_data)
-    
+    #shap_plot = generate_shap_plot(catboost_model, input_data)
+    shap_plot = None
     # Enregistrer la demande en DB
     loan_request = LoanRequest(
         user_id=current_user.id,  # récupérer l'utilisateur connecté
