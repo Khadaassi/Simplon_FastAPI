@@ -2,15 +2,13 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlmodel import Session, select
 from models.loans import LoanRequest
+import pandas as pd
 from database.database import get_session
 import pickle
-import pandas as pd
 from schemas.loans import LoanApplication
 from core.security import get_current_user
 from datetime import datetime
 from typing import Optional
-import shap
-import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
 
@@ -26,9 +24,6 @@ FEATURES = ['State', 'NAICS', 'NewExist', 'RetainedJob',
             'FranchiseCode', 'UrbanRural', 'GrAppv', 'Bank', 'Term']
 # Extraire le modèle CatBoost de la pipeline
 catboost_model = model.named_steps["model"]  # Récupérer le modèle entraîné
-
-# Créer l'explainer SHAP
-explainer = shap.Explainer(catboost_model)
 
 
 @router.get("/history")
@@ -57,21 +52,6 @@ def get_loan_history(
         for request in loan_requests
     ]
 
-def generate_shap_plot(model, input_data):
-    explainer = shap.Explainer(model)
-    shap_values = explainer(input_data)
-
-    plt.figure(figsize=(8, 4))
-    #shap.summary_plot(shap_values, input_data, plot_type="bar", show=False)
-    shap.plots.waterfall(shap_values[0])
-
-    buf = BytesIO()
-    plt.savefig(buf, format="png", bbox_inches="tight")
-    buf.seek(0)
-    plt.close()
-
-    # Encoder l'image en Base64
-    return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode("utf-8")
 
 @router.post("/request")
 def predict_and_save_loan(
@@ -85,8 +65,6 @@ def predict_and_save_loan(
     
     # Vérifier l'éligibilité
     is_eligible = bool(prediction[0])
-    # Générer l'explication SHAP
-    shap_plot = generate_shap_plot(catboost_model, input_data)
     
     # Enregistrer la demande en DB
     loan_request = LoanRequest(
@@ -103,5 +81,4 @@ def predict_and_save_loan(
         "eligible": is_eligible,
         "status": loan_request.status,
         "loan_request_id": loan_request.id,
-        "shap_plot": shap_plot
     }

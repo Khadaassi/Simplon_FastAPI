@@ -51,12 +51,12 @@ Follow these steps to execute the project:
 2. Clone this repository to your local machine:
 
 ```bash
-    git clone https://github.com/username/loan-prediction-api.git
+    git clone https://github.com/Khadaassi/Simplon_FastAPI.git
 ```
 3. Navigate to the project directory:
 
 ```bash
-    cd loan-prediction-api
+    cd Simplon_FastAPI/App
 ```
 4. Install the required dependencies:
 
@@ -73,6 +73,33 @@ Follow these steps to execute the project:
 ```bash
     uvicorn app.main:app --reload
 ```
+
+#### OR
+
+Run the project using Docker:
+
+1. Ensure Python 3.x is installed on your system.
+2. Clone this repository to your local machine:
+
+    ```bash
+    git clone https://github.com/Khadaassi/Simplon_App_bancaire_Django.git
+    ```
+
+3. Navigate to the project directory:
+
+    ```bash
+    cd Simplon_App_bancaire_Django/Bamk
+    ```
+4. Build and run your image.
+    ```bash
+    docker build -t fastapi-app .
+    docker run -rm -p 8000:8000 fastapi-app
+    ```
+
+Deploy to Azure using Bash script:
+
+    chmod +x script.sh
+    ./script.sh
 
 ---
 
@@ -110,7 +137,11 @@ The API provides the following outputs:
     "loan_request_id": 1
 }
 ```
+---
+<p align="center">Link ➔ <a href="http://bamkapp.francecentral.azurecontainer.io:8080">http://kaassi.francecentral.azurecontainer.io:8000 </a>
+</p>
 
+<p align="center"><i>Link only valid for internal use.</i></p>
 ---
 
 ## Evaluation Criteria
@@ -122,10 +153,6 @@ The API provides the following outputs:
 ### Evaluation Modalities
 - Oral presentation
 - Peer code review
-
-### Deliverables
-- Link to the API GitHub repository
-- Link to the Django project GitHub repository
 
 ---
 

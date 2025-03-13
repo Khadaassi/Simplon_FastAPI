@@ -7,7 +7,7 @@ connection_string = (
     "UID=admindbserver;"
     "PWD=Lhousseine!;"
     "Encrypt=yes;"
-    "TrustServerCertificate=yes;"  # Pour tester, afin de bypasser la vérification du certificat
+    "TrustServerCertificate=yes;"
     "Connection Timeout=30;"
 )
 
