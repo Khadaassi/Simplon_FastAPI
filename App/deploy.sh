@@ -36,7 +36,7 @@ docker build -t $IMAGE_NAME .
 echo "Taguer l'image Docker pour Azure Container Registry..."
 docker tag $IMAGE_NAME $ACR_NAME.azurecr.io/$IMAGE_NAME:latest
 
-cho "Pousser l'image vers Azure Container Registry..."
+echo "Pousser l'image vers Azure Container Registry..."
 docker push $ACR_NAME.azurecr.io/$IMAGE_NAME:latest
 
 # 8. Déploiement du conteneur sur Azure Container Instances

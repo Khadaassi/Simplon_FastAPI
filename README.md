@@ -1,74 +1,75 @@
-# <p align="center">Loan Eligibility Prediction API</p>
+# <p align="center">API de Prédiction d'éligibilité à un Prêt</p>
 
 <p align="center">
     <img src="images/project_logo.png" alt="Project Logo" >
 </p>
 
-## ➤ Menu
+## ➔ Menu
 
-* [➤ Project Structure](#-project-structure)
-* [➤ How to Run](#-how-to-run)
-* [➤ Requirements](#-requirements)
-* [➤ Outputs](#-outputs)
-* [➤ Evaluation Criteria](#-evaluation-criteria)
-* [➤ Performance Metrics](#-performance-metrics)
-* [➤ License](#-license)
-* [➤ Authors](#-authors)
+* [➔ Structure du Projet](#-structure-du-projet)
+* [➔ Comment Exécuter](#-comment-exécuter)
+* [➔ Prérequis](#-prérequis)
+* [➔ Sorties](#-sorties)
+* [➔ Critères d'évaluation](#-critères-dévaluation)
+* [➔ Métriques de Performance](#-métriques-de-performance)
+* [➔ Licence](#-licence)
+* [➔ Auteurs](#-auteurs)
 
 ---
 
-## Project Structure
+## Structure du Projet
 
-This project includes the following primary files and modules:
+Ce projet inclut les fichiers et modules principaux suivants :
 
 - **app/**
-    - **main.py**: Entry point of the API. Initializes and runs the FastAPI application.
-    - **routes/**:
-        - **auth.py**: Defines authentication-related endpoints (login, activation).
-        - **loans.py**: Endpoints for loan predictions and loan history.
-        - **admin.py**: Admin-specific endpoints for user management.
-    - **models/**:
-        - **loan_model.pkl**: Serialized machine learning model file.
-        - **user.py**: SQLModel class defining the structure of the User table.
-        - **loan.py**: SQLModel class defining the structure of the LoanRequest table.
-    - **core/**:
-        - **security.py**: Utility functions for authentication, password hashing, and JWT.
-        - **ml_model.py**: Contains the machine learning model for loan eligibility predictions.
-        - **config.py**: Configuration settings for the application.
-    - **database/**:
-        - **database.py**: Database connection and session management using SQLModel.
-    - **schemas/**:
-        - **loans.py**: Pydantic models for loan data validation.
-        - **users.py**: Pydantic models for user data validation.
-
+    - **main.py** : Point d'entrée de l'API. Initialise et exécute l'application FastAPI.
+    - **routes/** :
+        - **auth.py** : Définit les endpoints d'authentification (connexion, activation).
+        - **loans.py** : Endpoints pour les prédictions de prêts et l'historique des prêts.
+        - **admin.py** : Endpoints spécifiques aux administrateurs pour la gestion des utilisateurs.
+    - **models/** :
+        - **loan_model.pkl** : Fichier sérialisé du modèle de machine learning.
+        - **user.py** : Classe SQLModel définissant la structure de la table User.
+        - **loan.py** : Classe SQLModel définissant la structure de la table LoanRequest.
+    - **core/** :
+        - **security.py** : Fonctions utilitaires pour l'authentification, le hachage des mots de passe et les JWT.
+        - **ml_model.py** : Contient le modèle de machine learning pour la prédiction d'éligibilité aux prêts.
+        - **config.py** : Paramètres de configuration de l'application.
+    - **database/** :
+        - **database.py** : Connexion à la base de données et gestion des sessions avec SQLModel.
+    - **schemas/** :
+        - **loans.py** : Modèles Pydantic pour la validation des données de prêts.
+        - **users.py** : Modèles Pydantic pour la validation des données utilisateur.
+    - **migration_az.py** : Permet la migration des informations dans la database azur. La modification des tables pour convenir au langage mssql ont été réalisées directement par des requêtes sur le portail azur.
+    
 ---
 
-## How to Run
+## Comment Exécuter
 
-Follow these steps to execute the project:
+Suivez ces étapes pour exécuter le projet :
 
-1. Ensure Python >= 3.9 is installed on your system.
-2. Clone this repository to your local machine:
+1. Assurez-vous que Python >= 3.9 est installé sur votre système.
+2. Clonez ce dépôt sur votre machine locale :
 
 ```bash
     git clone https://github.com/username/loan-prediction-api.git
 ```
-3. Navigate to the project directory:
+3. Accédez au répertoire du projet :
 
 ```bash
     cd loan-prediction-api
 ```
-4. Install the required dependencies:
+4. Installez les dépendances requises :
 
 ```bash
     pip install -r requirements.txt
 ```
-5. Apply database migrations using Alembic:
+5. Appliquez les migrations de la base de données avec Alembic :
 
 ```bash
     alembic upgrade head
 ```
-6. Run the FastAPI application:
+6. Exécutez l'application FastAPI :
 
 ```bash
     uvicorn app.main:app --reload
@@ -76,32 +77,37 @@ Follow these steps to execute the project:
 
 ---
 
-## Requirements
+## Prérequis
 
-List of required software and libraries:
+Liste des logiciels et bibliothèques requis :
 
 - Python >= 3.9
 - FastAPI
-- SQLModel (built on SQLAlchemy and Pydantic)
+- SQLModel (basé sur SQLAlchemy et Pydantic)
 - Uvicorn
-- Passlib (password hashing)
+- Passlib (hachage de mots de passe)
 - Python-jose (JWT)
 - pandas
-- scikit-learn (for the ML model)
+- scikit-learn (pour le modèle de ML)
 
 ---
 
-## Outputs
+## Sorties
 
-The API provides the following outputs:
+L'API fournit les résultats suivants :
 
-- JSON responses indicating loan eligibility prediction.
-- Historical records of loan requests.
-- User management responses for admin operations.
+- Réponses JSON indiquant l'éligibilité à un prêt.
+- Enregistrements historiques des demandes de prêts.
+- Réponses pour la gestion des utilisateurs par l'administrateur.
 
-### Example Output
+### Exemple de Sortie
 
-**Loan Eligibility Prediction**
+<p align="center">Lien ➔ <a href="http://ussbaapi.francecentral.azurecontainer.io:8000/docs">http://ussbaapi.francecentral.azurecontainer.io:8080/docs</a>
+</p>
+<p align="center"><i>Ce lien est réservé à un usage interne.</i></p>
+
+
+**Prédiction d'éligibilité à un prêt**
 
 ```json
 {
@@ -113,36 +119,36 @@ The API provides the following outputs:
 
 ---
 
-## Evaluation Criteria
+## Critères d'évaluation
 
-### Educational Modalities
-- Group of 3 people
-- Duration: 2 weeks
+### Modalités éducatives
+- Groupe de 3 personnes
+- Durée : 2 semaines
 
-### Evaluation Modalities
-- Oral presentation
-- Peer code review
+### Modalités d'évaluation
+- Présentation orale
+- Revue de code par les pairs
 
-### Deliverables
-- Link to the API GitHub repository
-- Link to the Django project GitHub repository
-
----
-
-## Performance Metrics
-
-- Applications and API meet the requirements of the specifications.
-- No obvious security vulnerabilities.
+### Livrables
+- Lien vers le dépôt GitHub de l'API
+- Lien vers le dépôt GitHub du projet Django
 
 ---
 
-## License
+## Métriques de Performance
 
-[MIT License](LICENSE)
+- L'application et l'API respectent les exigences du cahier des charges.
+- Aucune faille de sécurité évidente.
 
 ---
 
-## Authors
+## Licence
+
+[Licence MIT](LICENSE)
+
+---
+
+## Auteurs
 
 - **Khadija Aassi**
   <a href="https://github.com/khadijaaassi" target="_blank">
